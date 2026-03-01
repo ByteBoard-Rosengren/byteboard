@@ -39,7 +39,8 @@ export default function Register() {
       message.success("Registration successful!");
       router.push("/");
     } catch (error: any) {
-      message.error(error.message || "Registration failed");
+      const msg = error?.response?.status === 409 ? "Username already taken." : error.message || "Registration failed";
+      message.error(msg);
     } finally {
       setLoading(false);
     }
