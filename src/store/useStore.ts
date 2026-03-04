@@ -30,6 +30,15 @@ interface Comment {
   updated_at: string;
 }
 
+interface Notification {
+  notification_id: number;
+  user_id: number;
+  post_id: number;
+  message: string;
+  is_read: boolean;
+  created_at: string;
+}
+
 interface Store {
   // Posts state
   posts: Post[];
@@ -52,6 +61,11 @@ interface Store {
   currentProfile: Profile | null;
   setProfiles: (profiles: Profile[]) => void;
   setCurrentProfile: (profile: Profile | null) => void;
+
+  // Notifications state
+  notifications: Notification[];
+  setNotifications: (notifications: Notification[]) => void;
+  markNotificationRead: (notificationId: number) => void;
 
   // UI state
   isLoading: boolean;
@@ -101,6 +115,16 @@ export const useStore = create<Store>((set) => ({
   currentProfile: null,
   setProfiles: (profiles) => set({ profiles }),
   setCurrentProfile: (profile) => set({ currentProfile: profile }),
+
+  // Notification state
+  notifications: [],
+  setNotifications: (notifications) => set({ notifications }),
+  markNotificationRead: (notificationId) =>
+    set((state) => ({
+      notifications: state.notifications.map((n) =>
+        n.notification_id === notificationId ? { ...n, is_read: true } : n
+      ),
+    })),
 
   // UI state
   isLoading: false,
