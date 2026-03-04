@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Badge, Popover, List, Typography } from "antd";
+import { Badge, Popover, Typography } from "antd";
 import { BellOutlined } from "@ant-design/icons";
 import { fetchNotifications, markNotificationRead } from "@/lib/api";
 import { useStore } from "@/store/useStore";
@@ -58,12 +58,11 @@ export default function NotificationBell() {
                     <Text type="secondary">No notifications</Text>
                 </div>
             ) : (
-                <List
-                    dataSource={notifications}
-                    renderItem={(notif) => (
-                        <List.Item
+                <ul className="list-none m-0 p-0">
+                    {notifications.map((notif) => (
+                        <li
                             key={notif.notification_id}
-                            className="cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 px-4"
+                            className="cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 px-4 py-3 border-b last:border-b-0"
                             onClick={() => handleNotificationClick(notif.notification_id, notif.post_id)}
                         >
                             <div className="flex items-center gap-2 w-full">
@@ -72,9 +71,9 @@ export default function NotificationBell() {
                                 )}
                                 <Text className={!notif.is_read ? "font-semibold" : ""}>{notif.message}</Text>
                             </div>
-                        </List.Item>
-                    )}
-                />
+                        </li>
+                    ))}
+                </ul>
             )}
         </div>
     );
