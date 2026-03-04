@@ -26,6 +26,19 @@ export default function NotificationBell() {
         loadNotifications();
     }, [setNotifications]);
 
+    useEffect(() => {
+        const interval = setInterval(async () => {
+            try {
+                const response = await fetchNotifications();
+                setNotifications(response.data || []);
+            } catch (error) {
+                console.error("Failed to poll notifications:", error);
+            }
+        }, 30000);
+
+        return () => clearInterval(interval);
+    }, [setNotifications]);
+
     const handleNotificationClick = async (notificationId: number, postId: number) => {
         try {
             await markNotificationRead(notificationId);
