@@ -17,7 +17,7 @@ export default function Navbar() {
     return (
         <header className={theme === "dark" ? "bg-gray-800 shadow-sm" : "bg-white shadow-sm"}>
             <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-                <Title level={2} className="!mb-0">
+                <Title level={2} className="!mb-0 cursor-pointer" onClick={() => router.push('/')}>
                     ByteBoard
                 </Title>
                 <div className="flex gap-4 items-center">

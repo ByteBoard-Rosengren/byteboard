@@ -175,7 +175,7 @@ export default function PostDetail() {
           <Button icon={<ArrowLeftOutlined />} onClick={() => router.push("/")}>
             Back to Feed
           </Button>
-          <Title level={2} className="!mb-0">
+          <Title level={2} className="!mb-0 cursor-pointer" onClick={() => router.push("/")}>
             ByteBoard
           </Title>
         </div>
