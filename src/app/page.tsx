@@ -5,14 +5,15 @@ import { useTheme } from "@/contexts/ThemeContext";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button, Card, Typography, Spin } from "antd";
-import { UserOutlined, PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined } from "@ant-design/icons";
 import { getPosts } from "@/lib/api";
 import CreatePostModal from "@/components/CreatePostModal";
+import Navbar from "@/components/Navbar";
 
 const { Title, Text } = Typography;
 
 export default function Home() {
-  const { user, loading: authLoading, logout } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const { theme } = useTheme();
   const router = useRouter();
   const [posts, setPosts] = useState<any[]>([]);
@@ -56,23 +57,7 @@ export default function Home() {
 
   return (
     <div className={`min-h-screen ${theme === "dark" ? "bg-gray-900" : "bg-gray-50"}`}>
-      <header className={theme === "dark" ? "bg-gray-800 shadow-sm" : "bg-white shadow-sm"}>
-        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-          <Title level={2} className="!mb-0">
-            ByteBoard
-          </Title>
-          <div className="flex gap-4 items-center">
-            <Text>Welcome, {user.username}!</Text>
-            <Button
-              icon={<UserOutlined />}
-              onClick={() => router.push(`/profile/${user.id}`)}
-            >
-              My Profile
-            </Button>
-            <Button onClick={logout}>Logout</Button>
-          </div>
-        </div>
-      </header>
+      <Navbar />
 
       <main className="max-w-7xl mx-auto px-4 py-8">
         <div className="mb-6 flex justify-between items-center">
