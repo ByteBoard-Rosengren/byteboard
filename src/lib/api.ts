@@ -81,3 +81,7 @@ export const getAllUsers = () => api.get("/admin/users");
 // User posts
 export const getPostsByUser = (userId: number) =>
   api.get(`/posts/user/${userId}`)
+
+// Notifications
+export const fetchNotifications = () => api.get("/notifications");
+export const markNotificationRead = (notificationId: number) => api.put(`/notifications/${notificationId}/read`)
