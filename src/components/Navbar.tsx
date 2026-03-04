@@ -5,6 +5,7 @@ import { useTheme } from "@/contexts/ThemeContext";
 import { useRouter } from "next/navigation";
 import { Button, Typography } from "antd";
 import { UserOutlined } from "@ant-design/icons";
+import NotificationBell from "./NotificationBell";
 
 const { Title, Text } = Typography;
 
@@ -21,6 +22,7 @@ export default function Navbar() {
                 </Title>
                 <div className="flex gap-4 items-center">
                     <Text>Welcome, {user?.username}!</Text>
+                    <NotificationBell />
                     <Button
                         icon={<UserOutlined />}
                         onClick={() => router.push(`/profile/${user?.id}`)}
