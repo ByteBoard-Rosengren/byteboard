@@ -18,6 +18,7 @@ interface Post {
   content: string;
   author: string;
   date_posted: string;
+  reactions: Reactions;
 }
 
 interface Comment {
@@ -27,6 +28,13 @@ interface Comment {
   content: string;
   author: string;
   date_posted: string;
+  reactions: Reactions;
+}
+
+interface Reactions {
+  likes: number;
+  dislikes: number;
+  user_reaction: 'like' | 'dislike' | null;
 }
 
 export default function PostDetail() {
