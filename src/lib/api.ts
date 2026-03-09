@@ -85,3 +85,10 @@ export const getPostsByUser = (userId: number) =>
 // Notifications
 export const fetchNotifications = () => api.get("/notifications");
 export const markNotificationRead = (notificationId: number) => api.put(`/notifications/${notificationId}/read`)
+
+// Reactions
+export const reactToPost = (postId: number, reaction: 'like' | 'dislike') =>
+  api.post(`/posts/${postId}/react`, { reaction });
+
+export const reactToComment = (commentId: number, reaction: 'like' | 'dislike') =>
+  api.post(`/comments/${commentId}/react`, { reaction });
