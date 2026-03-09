@@ -6,8 +6,9 @@ import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { Button, Card, Typography, Spin, Input, Popconfirm, message } from "antd";
 import { ArrowLeftOutlined, DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { getPost, getComments, createComment, updateComment, deleteComment, updatePost, deletePost } from "@/lib/api";
+import { getPost, getComments, createComment, updateComment, deleteComment, updatePost, deletePost, reactToPost, reactToComment } from "@/lib/api";
 import UserProfileModal from "@/components/UserProfileModal";
+import ReactionButtons from "@/components/ReactionButtons";
 
 const { Title, Text } = Typography;
 
@@ -166,6 +167,26 @@ export default function PostDetail() {
     }
   };
 
+  const handlePostReact = async (reaction: 'like' | 'dislike') => {
+    try {
+      const { data } = await reactToPost(postId, reaction);
+      setPost((prev) => prev ? { ...prev, reactions: data } : prev);
+    } catch {
+      message.error("Failed to react to post");
+    }
+  };
+
+  const handleCommentReact = async (commentId: number, reaction: 'like' | 'dislike') => {
+    try {
+      const { data } = await reactToComment(commentId, reaction);
+      setComments((prev) =>
+        prev.map((c) => c.comment_id === commentId ? { ...c, reactions: data } : c)
+      );
+    } catch {
+      message.error("Failed to react to comment");
+    }
+  };
+
   if (authLoading || loading) {
     return (
       <div className="flex min-h-screen items-center justify-center">
@@ -245,6 +266,12 @@ export default function PostDetail() {
                 {" "}· {new Date(post.date_posted).toLocaleDateString()}
               </Text>
               <p className="mt-4 whitespace-pre-wrap">{post.content}</p>
+              <ReactionButtons
+                likes={post.reactions.likes}
+                dislikes={post.reactions.dislikes}
+                userReaction={post.reactions.user_reaction}
+                onReact={handlePostReact}
+              />
             </>
           )}
         </Card>
@@ -298,7 +325,15 @@ export default function PostDetail() {
                           </div>
                         </div>
                       ) : (
-                        <p className="whitespace-pre-wrap">{comment.content}</p>
+                        <>
+                          <p className="whitespace-pre-wrap">{comment.content}</p>
+                          <ReactionButtons
+                            likes={comment.reactions.likes}
+                            dislikes={comment.reactions.dislikes}
+                            userReaction={comment.reactions.user_reaction}
+                            onReact={(reaction) => handleCommentReact(comment.comment_id, reaction)}
+                          />
+                        </>
                       )}
                     </div>
                     {user.id === comment.user_id &&
