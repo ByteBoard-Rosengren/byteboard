@@ -90,5 +90,5 @@ export const markNotificationRead = (notificationId: number) => api.put(`/notifi
 export const reactToPost = (postId: number, reaction: 'like' | 'dislike') =>
   api.post(`/posts/${postId}/react`, { reaction });
 
-export const reactToComments = (commentId: number, reaction: 'like' | 'dislike') =>
+export const reactToComment = (commentId: number, reaction: 'like' | 'dislike') =>
   api.post(`/comments/${commentId}/react`, { reaction });
