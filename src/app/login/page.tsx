@@ -4,15 +4,16 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Form, Input, Button, Card, Typography, message } from "antd";
+import { Form, Input, Button, Card, Typography, App } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import Link from "next/link";
 
 const { Title, Text } = Typography;
 
-export default function Login() {
+function LoginForm() {
   const { login, user } = useAuth();
   const { theme } = useTheme();
+  const { message } = App.useApp();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
@@ -94,5 +95,13 @@ export default function Login() {
         </div>
       </Card>
     </div>
+  );
+}
+
+export default function Login() {
+  return (
+    <App>
+      <LoginForm />
+    </App>
   );
 }
