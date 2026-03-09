@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Modal, Form, Input, Button, message } from "antd";
+import { Modal, Form, Input, Button, App } from "antd";
 import { createPost } from "@/lib/api";
 
 interface Post {
@@ -20,6 +20,7 @@ interface CreatePostModalProps {
 }
 
 export default function CreatePostModal({ open, onClose, onPostCreated }: CreatePostModalProps) {
+  const { message } = App.useApp();
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
 

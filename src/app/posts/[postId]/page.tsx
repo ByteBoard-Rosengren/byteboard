@@ -122,7 +122,7 @@ export default function PostDetail() {
     setSubmittingComment(true);
     try {
       const response = await createComment(postId, newComment.trim());
-      setComments((prev) => [...prev, response.data]);
+      setComments((prev) => [...prev, { ...response.data, reactions: { likes: 0, dislikes: 0, user_reaction: null } }]);
       setNewComment("");
     } catch {
       message.error("Failed to post comment");
